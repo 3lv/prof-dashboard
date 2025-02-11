@@ -13,9 +13,9 @@ export async function POST(request: NextRequest) {
     const lambdaPayload = JSON.stringify({ latex });
 
     const command = new InvokeCommand({
-      FunctionName: "latexToPdfFunction", // Name of your Lambda function
-      InvocationType: "RequestResponse",    // Synchronous invocation
-      Payload: Buffer.from(lambdaPayload),
+      FunctionName: "latexToPdfFunction",
+      InvocationType: "RequestResponse",
+      Payload: lambdaPayload,
     });
 
     const response = await lambdaClient.send(command);
@@ -24,9 +24,16 @@ export async function POST(request: NextRequest) {
       throw new Error("No payload returned from Lambda");
     }
 
-    // Convert the returned payload (a Uint8Array) into a Buffer.
-    // Adjust this if your Lambda returns data in a different format (e.g., base64-encoded string).
-    const pdfBuffer = Buffer.from(response.Payload);
+    // Parse the JSON response from Lambda
+    const payloadString = Buffer.from(response.Payload).toString('utf-8');
+    const payloadObj = JSON.parse(payloadString);
+
+    if (payloadObj.statusCode !== 200) {
+      throw new Error(`Lambda error: ${payloadObj.body}`);
+    }
+
+    // Decode the PDF from the base64 encoded string
+    const pdfBuffer = Buffer.from(payloadObj.body, 'base64');
 
     return new NextResponse(pdfBuffer, {
       headers: {

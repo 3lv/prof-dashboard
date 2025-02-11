@@ -29,11 +29,6 @@ const grades = ["V", "VI", "VII", "VIII"]
 const difficultyLevels = ["Remediere", "Consolidare", "Standard", "Performanță", "Olimpiadă"]
 const itemTypes = ["Grid", "Complete Solution"]
 
-const ItemTypeTranslation: Record<string, string> = {
-  Grid: "Grilă",
-  "Complete Solution": "Rezolvare completă",
-}
-
 // Import your curriculum data from your data library
 import curriculumData from "@/lib/data/curriculumData"
 
@@ -70,7 +65,6 @@ export default function GenerateTestPage() {
   const [pdfUrl, setPdfUrl] = useState<string | null>(null)
 
   // Collapsible states
-  const [isAdvancedOpen, setIsAdvancedOpen] = useState(false)
   const [isLatexOpen, setIsLatexOpen] = useState(false)
 
   // Get the authenticated user

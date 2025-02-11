@@ -184,7 +184,7 @@ export default function LessonsPage() {
                 {isDragActive ? (
                   <p>Drop the files here ...</p>
                 ) : (
-                  <p>Drag 'n' drop some files here, or click to select files</p>
+                  <p>Drag and drop some files here, or click to select files</p>
                 )}
                 <Upload className="mx-auto mt-4" size={24} />
               </div>

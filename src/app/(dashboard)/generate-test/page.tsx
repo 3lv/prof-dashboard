@@ -226,7 +226,6 @@ export default function GenerateTestPage() {
               values={selectedContents}
               placeholder="Select content"
               disabled={!selectedGrade || !selectedDifficulty}
-              className="w-full"
             />
           </div>
 
